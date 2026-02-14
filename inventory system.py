@@ -65,9 +65,11 @@ def tree_delete():
 
 def tree_edit():
     for item in inventory_tree.selection():
+        name = inventory_tree.item(item,'text')
         item = inventory_tree.item(item)
         val = item['values']
-        edit_popup(val)
+        name = item['text']
+        edit_popup(val,name)
     return
 
 
@@ -126,7 +128,7 @@ def open_log_frame():
     audit_log_frame.pack(side=tk.BOTTOM,expand=True,fill=tk.BOTH)
     return
 
-def edit_popup(text):
+def edit_popup(text,name):
     pop = tk.Toplevel(root)
     pop.geometry("400x200")
     product = tk.StringVar()
@@ -152,7 +154,7 @@ def edit_popup(text):
         inventory_tree.insert('','end',text=f'{product.get()}',values=(f'{product_id.get()}',f'{c}',f'{a}',f'{total_sum:.2f}'))
         return 
     
-    textentry('Product:',product,text[0])
+    textentry('Product:',product,name)
     textentry('Product_ID:',product_id,text[1])
     textentry('Cost:',cost,text[2])
     textentry('Amount:',amount,text[3])
