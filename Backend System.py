@@ -60,20 +60,6 @@ class Product:
                 cursor.close()
                 conn.close()
 
-def view_inventory():
-    conn = InventoryManager.get_connection()
-    cursor = conn.cursor()
-    cursor.execute("SELECT * FROM inventory")
-    result = cursor.fetchall()
-    
-    print("\n--- Current Inventory ---")
-    print(f"{'ID':<10} {'Name':<20} {'Qty':<10} {'Price':<10}")
-    print("-" * 50)
-    for row in result:
-        # row indexes: 0=ID, 1=Name, 2=Qty, 3=Price
-        print(f"{row[0]:<10} {row[1]:<20} {row[2]:<10} ${row[3]:<10}")
-    print("-" * 50 + "\n")
-    conn.close()
 
 @staticmethod
 def smart_remove_by_id(product_id):
@@ -193,3 +179,20 @@ class Employee:
 from datetime import datetime
 current_date = datetime.now().strftime('%Y-%m-%d %I:%M:%S %p')
 print(current_date)
+
+class InventoryManager:
+    def __init__(self):
+        self.inventory = {}
+    @staticmethod
+    def view_inventory():
+        conn = get_db_connection()
+        if conn is None:
+            return []
+
+        cursor = conn.cursor()
+        try:
+            cursor.execute("SELECT ProductID, ProductName, Quantity, Price FROM inventory")
+            return cursor.fetchall()
+        finally:
+            cursor.close()
+            conn.close()
