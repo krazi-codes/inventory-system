@@ -52,8 +52,6 @@ class flatbutton:
         b.pack(fill=fill,padx=marginx,pady=marginy)
         b.config(borderwidth=0)
 
-active_frame = front_frame
-
 def hatsune_miku(pii):
     print('hatsune miku')
     print(pii)
