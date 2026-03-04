@@ -100,3 +100,97 @@ def smart_remove_by_id(product_id):
     finally:
         cursor.close()
         conn.close()
+
+    def get_product_id(self):
+        
+        return self.product_id
+        
+
+    def get_name(self):
+        return self.name
+
+    def get_price(self):
+        return self.price
+
+    def search_product(products, product_id):
+        for product in products:
+            if product.get_product_id() == product_id:
+                return product
+        return None
+        
+class Customer:
+    def __init__(self, customer_id, name, email):
+        self.customer_id = customer_id
+        self.name = name
+        self.email = email
+        logging.info(f"Instantiated Customer Object: {self.customer_id} {self.name} {self.email}")
+
+    def get_customer_id(self):
+        return self.customer_id
+
+    def get_name(self):
+        return self.name
+
+    def get_email(self):
+        return self.email
+
+    def search_customer(customers, customer_id):
+        for customer in customers:
+            if customer.get_customer_id() == customer_id:
+                return customer
+        return None
+
+class Order:
+    def __init__(self, order_id, customer, product, quantity):
+        self.order_id = order_id
+        self.customer = customer
+        self.product = product
+        self.quantity = quantity
+        logging.info(f"Instantiated Order object {self.order_id} {self.customer} {self.product} {self.quantity}")
+
+    def get_order_id(self):
+        return self.order_id
+
+    def calculate_total(self):
+        return self.product.get_price() * self.quantity
+    
+    def display_order(order):
+        return f"Order ID: {order.get_order_id()}, Customer: {order.customer.get_name()}, Total: {order.calculate_total()}"
+
+class Employee:
+    
+    def __init__(self, employee_id, name, position):
+        self.employee_id = employee_id
+        self.name = name
+        self.position = position
+        logging.info(f"Instantiated Employee object {self.employee_id}, {self.name}, {self.position}")
+
+    def get_employee_id(self):
+        return self.employee_id
+
+    def get_name(self):
+        return self.name
+
+    def get_position(self):
+        return self.position
+
+from datetime import datetime
+current_date = datetime.now().strftime('%Y-%m-%d %I:%M:%S %p')
+print(current_date)
+
+class InventoryManager:
+    def __init__(self):
+        self.inventory = {}
+    @staticmethod
+    def view_inventory():
+        conn = get_db_connection()
+        if conn is None:
+            return []
+
+        cursor = conn.cursor()
+        try:
+            cursor.execute("SELECT ProductID, ProductName, Quantity, Price FROM inventory")
+            return cursor.fetchall()
+        finally:
+            cursor.close()
+            conn.close()
