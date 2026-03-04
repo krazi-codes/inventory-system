@@ -26,7 +26,6 @@ def get_db_connection():
         return None
 
 class Product:
-    #_______________THIS IS TYLER SQL CODE
     def __init__(self, product_id, name, price):
         self.product_id = product_id
         self.name = name
@@ -102,7 +101,6 @@ def smart_remove_by_id(product_id):
         cursor.close()
         conn.close()
 
-#-----------------BELOW IS ISSAM CODE
     def get_product_id(self):
         
         return self.product_id
